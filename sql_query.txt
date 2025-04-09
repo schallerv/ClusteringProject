@@ -1,0 +1,15 @@
+SELECT TOP 50000
+    u.Id, 
+    u.CreationDate, 
+    u.Reputation,
+    u.UpVotes,
+    u.DownVotes,   
+    COUNT(DISTINCT p.Id) AS NumPosts,
+    SUM(p.Score) as TotalScore,
+    SUM(p.ViewCount) as TotalViews,
+    SUM(p.CommentCount) as TotalComments
+
+FROM Users u
+LEFT JOIN Posts p ON u.Id = p.OwnerUserId
+GROUP BY u.Id, u.CreationDate, u.Reputation, u.UpVotes, u.DownVotes
+order by newid()
